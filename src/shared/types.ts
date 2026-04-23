@@ -125,7 +125,18 @@ export type PluginMessage =
   | { type: 'export-md'; data: ExportData }
   | { type: 'export-storybook'; data: ExportData }
   | { type: 'notify'; message: string; error?: boolean }
+  | { type: 'get-selection' }
   | { type: 'close' };
+
+export interface FigmaSelectionNode {
+  nodeType: string;
+  name: string;
+  description: string;
+  variants: Record<string, string[]>;   // property name → options (VARIANT type only)
+  booleans: Record<string, boolean>;    // property name → default (BOOLEAN type only)
+  texts: Record<string, string>;        // property name → default (TEXT type only)
+  childCount: number;
+}
 
 export interface ColorVariableData {
   primitive: { collection: string; variables: VariableEntry[] };

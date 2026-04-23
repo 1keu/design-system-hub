@@ -3,7 +3,7 @@ import Sidebar, { SidebarItemId } from './components/Sidebar';
 import ColorPanel from './panels/ColorPanel';
 import TypographyPanel from './panels/TypographyPanel';
 import ComponentPanel from './panels/ComponentPanel';
-import { ColorVariableData, TypographyVariableData, ComponentConfig, VariantStyle, SizeConfig, ComponentProperty } from '../shared/types';
+import { ColorVariableData, TypographyVariableData, ComponentConfig, VariantStyle, SizeConfig, ComponentProperty, FigmaSelectionNode } from '../shared/types';
 import { generateColorVariableData } from './utils/colorGenerator';
 import { generateTypographyVariableData } from './utils/typographyGenerator';
 import { INITIAL_COMPONENTS } from '../shared/defaults';
@@ -31,6 +31,7 @@ export default function App() {
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [loginLoading, setLoginLoading] = useState(false);
+  const [selectionInfo, setSelectionInfo] = useState<FigmaSelectionNode[] | null>(null);
 
   const dismissToast = useCallback((id: number) => {
     setToasts(prev => prev.filter(t => t.id !== id));
@@ -48,6 +49,7 @@ export default function App() {
     window.onmessage = (e: MessageEvent) => {
       const msg = e.data.pluginMessage;
       if (msg?.type === 'notify') addToast(msg.message, msg.error);
+      if (msg?.type === 'selection-info') setSelectionInfo(msg.data);
       if (msg?.type === 'import-result' && msg.data) {
         const parsed = parseFigmaExport(msg.data);
         if (parsed) {
@@ -221,6 +223,13 @@ export default function App() {
               </button>
             )
           )}
+          <button
+            className="btn-add-all"
+            style={{ background: 'transparent', color: 'var(--text-secondary)', border: '1px solid var(--border)', fontSize: 11 }}
+            onClick={() => send({ type: 'get-selection' })}
+          >
+            選択確認
+          </button>
           <button className="btn-add-all" onClick={handleAddAll}>
             全てFigmaに追加
           </button>
@@ -235,6 +244,51 @@ export default function App() {
             {loginLoading ? '...' : 'ログイン'}
           </button>
         </form>
+      )}
+
+      {selectionInfo !== null && (
+        <div style={{ padding: '10px 14px', background: 'var(--bg-subtle)', borderBottom: '1px solid var(--border)', fontSize: 11, display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
+              Figma Selection — {selectionInfo.length === 0 ? '未選択' : `${selectionInfo.length}ノード`}
+            </span>
+            <button onClick={() => setSelectionInfo(null)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', fontSize: 12 }}>✕</button>
+          </div>
+          {selectionInfo.length === 0 && (
+            <span style={{ color: 'var(--text-secondary)' }}>Figmaでコンポーネントを選択してください</span>
+          )}
+          {selectionInfo.map((node, i) => (
+            <div key={i} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 6, padding: '8px 10px', display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                <span style={{ background: node.nodeType === 'COMPONENT_SET' ? '#e0e7ff' : '#f0fdf4', color: node.nodeType === 'COMPONENT_SET' ? '#4338ca' : '#166534', borderRadius: 4, padding: '1px 5px', fontSize: 10, fontWeight: 600, fontFamily: 'monospace' }}>{node.nodeType}</span>
+                <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{node.name}</span>
+              </div>
+              {node.description && <div style={{ color: 'var(--text-secondary)' }}>{node.description}</div>}
+              {Object.keys(node.variants).length > 0 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 2 }}>
+                  {Object.entries(node.variants).map(([key, opts]) => (
+                    <div key={key} style={{ display: 'flex', gap: 4, flexWrap: 'wrap', alignItems: 'center' }}>
+                      <span style={{ color: 'var(--text-secondary)', minWidth: 60, fontFamily: 'monospace' }}>{key}:</span>
+                      {opts.map(o => (
+                        <span key={o} style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border)', borderRadius: 3, padding: '1px 5px', fontFamily: 'monospace' }}>{o}</span>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              )}
+              {Object.keys(node.booleans).length > 0 && (
+                <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', marginTop: 2 }}>
+                  {Object.entries(node.booleans).map(([key, val]) => (
+                    <span key={key} style={{ background: '#fef9c3', border: '1px solid #fde047', borderRadius: 3, padding: '1px 5px', fontFamily: 'monospace', fontSize: 10 }}>{key}: {String(val)}</span>
+                  ))}
+                </div>
+              )}
+              {node.childCount > 0 && (
+                <div style={{ color: 'var(--text-secondary)', fontSize: 10 }}>子ノード: {node.childCount}個</div>
+              )}
+            </div>
+          ))}
+        </div>
       )}
 
       <div className="layout">

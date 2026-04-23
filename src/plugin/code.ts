@@ -17,6 +17,9 @@ figma.ui.onmessage = async (msg: PluginMessage) => {
         await generateComponents(msg.data.components, msg.data.spacing);
         figma.ui.postMessage({ type: 'notify', message: 'コンポーネントを生成しました！' });
         break;
+      case 'get-selection':
+        figma.ui.postMessage({ type: 'selection-info', data: getSelectionInfo() });
+        break;
       case 'close':
         figma.closePlugin();
         break;
@@ -26,6 +29,33 @@ figma.ui.onmessage = async (msg: PluginMessage) => {
     figma.ui.postMessage({ type: 'notify', message: `エラー: ${err.message}`, error: true });
   }
 };
+
+function getSelectionInfo() {
+  return figma.currentPage.selection.map(node => {
+    const variants:  Record<string, string[]> = {};
+    const booleans:  Record<string, boolean>  = {};
+    const texts:     Record<string, string>   = {};
+
+    if (node.type === 'COMPONENT_SET' || node.type === 'COMPONENT') {
+      const defs = (node as ComponentSetNode | ComponentNode).componentPropertyDefinitions ?? {};
+      for (const [key, def] of Object.entries(defs)) {
+        if (def.type === 'VARIANT')  variants[key] = (def as { type: 'VARIANT'; variantOptions: string[] }).variantOptions ?? [];
+        if (def.type === 'BOOLEAN')  booleans[key] = (def as { type: 'BOOLEAN'; defaultValue: boolean }).defaultValue;
+        if (def.type === 'TEXT')     texts[key]    = String((def as { type: 'TEXT'; defaultValue: string }).defaultValue ?? '');
+      }
+    }
+
+    return {
+      nodeType:    node.type,
+      name:        node.name,
+      description: (node as SceneNode & { description?: string }).description ?? '',
+      variants,
+      booleans,
+      texts,
+      childCount:  'children' in node ? (node as ChildrenMixin).children.length : 0,
+    };
+  });
+}
 
 // ===== Variables =====
 
