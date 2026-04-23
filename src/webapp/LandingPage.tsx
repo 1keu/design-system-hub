@@ -34,23 +34,23 @@ function useReveal() {
 const FEATURES = [
   {
     num: '01',
-    title: 'Figmaから直接インポート',
-    desc: 'Figma Pluginを使ってコンポーネントセット・変数をそのままインポート。バリアント、サイズ、スタイル情報を引き継いで即座に管理できる。ゼロから定義し直す必要はない。',
+    title: 'Import directly from Figma',
+    desc: 'Use the Figma Plugin to import component sets and variables as-is. Variants, sizes, and style information are carried over so you can start managing them immediately — no need to redefine everything from scratch.',
   },
   {
     num: '02',
-    title: 'AIが読めるデザインシステム',
-    desc: 'APIトークンで接続すれば、AIエージェントがデザインシステムを直接参照して実装できる。FigmaのコンポーネントはAIに「画像」として見えるだけだが、HubはトークンとVariantが構造化されたデータとして扱える。',
+    title: 'A design system AI can read',
+    desc: 'Connect via API token and AI agents can reference your design system directly to implement components. Figma components appear to AI as images only. Hub exposes tokens and variants as structured, machine-readable data.',
   },
   {
     num: '03',
-    title: 'チーム全員のSSoT',
-    desc: 'デザイナー・PdM・エンジニアがブラウザで同じデザインシステムを参照・確認できる。コンポーネントの定義・使い方・Do&Don\'tを一か所で管理。Storybookを別途立てる必要がなくなる。',
+    title: 'A single source of truth for the whole team',
+    desc: 'Designers, PMs, and engineers all reference the same design system in the browser. Manage component definitions, usage guidelines, and Do & Don\'ts in one place. No need to run a separate Storybook.',
   },
   {
     num: '04',
-    title: 'バリアントをギャラリーで確認',
-    desc: '全コンポーネントを全バリアント・全サイズでギャラリー表示。実装前にコンポーネントの見え方・使い分けをチームで視覚的に確認・共有できる。',
+    title: 'Browse every variant in a gallery',
+    desc: 'View all components across every variant and size in a gallery layout. Visually confirm and share how components look and when to use each one — before implementation begins.',
   },
 ];
 
@@ -71,7 +71,7 @@ export default function LandingPage({ onEnterApp }: Props) {
     e.preventDefault();
     const t = email.trim();
     if (!t || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t)) {
-      setError('正しいメールアドレスを入力してください');
+      setError('Please enter a valid email address.');
       return;
     }
     saveEmail(t);
@@ -89,7 +89,7 @@ export default function LandingPage({ onEnterApp }: Props) {
             <span className="lp-logo-name">Design System Hub</span>
           </div>
           <button className="lp-header-cta" onClick={openModal}>
-            ウェイティングリストに登録
+            Join the waitlist
           </button>
         </div>
       </header>
@@ -103,20 +103,21 @@ export default function LandingPage({ onEnterApp }: Props) {
             <p className="lp-overline">Private Beta</p>
 
             <h1 className="lp-h1">
-              デザインシステムを、<br />
-              チームとAIの<br />
-              <em className="lp-h1-em">共通言語にする。</em>
+              One design system<br />
+              for your team<br />
+              <em className="lp-h1-em">and your AI.</em>
             </h1>
 
             <p className="lp-subhead">
-              FigmaのコンポーネントをインポートしUI設計をトークン・バリアント・ドキュメントとして構造化。デザイナーも、エンジニアも、AIエージェントも、同じデザインシステムを参照できる。
+              Import Figma components and structure your UI as tokens, variants, and docs.
+              Designers, engineers, and AI agents all reference the same design system.
             </p>
 
             <div className="lp-hero-actions">
               <button className="lp-btn-primary" onClick={openModal}>
-                始める →
+                Get started →
               </button>
-              <p className="lp-hero-note">公開時にメールでお知らせします</p>
+              <p className="lp-hero-note">We'll notify you by email when we launch.</p>
             </div>
           </div>
 
@@ -219,23 +220,23 @@ export default function LandingPage({ onEnterApp }: Props) {
       <section className="lp-how">
         <div className="lp-section-inner" ref={howRef}>
           <p className="lp-eyebrow reveal-child">How it works</p>
-          <h2 className="lp-h2 reveal-child">3ステップで始められる</h2>
+          <h2 className="lp-h2 reveal-child">Up and running in three steps</h2>
           <div className="lp-steps">
             {[
               {
                 num: '1',
-                title: 'FigmaからインポートまたはゼロからUI設計を定義',
-                desc: 'Figma Pluginを使ってコンポーネントをインポート、またはWebアプリ上でテンプレートを選んで空の状態から構築。',
+                title: 'Import from Figma or define from scratch',
+                desc: 'Use the Figma Plugin to import components, or pick a template in the web app and build from an empty state.',
               },
               {
                 num: '2',
-                title: 'バリアント・トークン・ドキュメントを整える',
-                desc: 'バリアント、サイズ、カラートークン、タイポグラフィ、Do&Don\'tをHubで一元管理。FigmaとHubが同期される。',
+                title: 'Organize variants, tokens, and docs',
+                desc: 'Manage variants, sizes, color tokens, typography, and Do & Don\'ts in Hub. Figma and Hub stay in sync automatically.',
               },
               {
                 num: '3',
-                title: 'チームとAIに共有する',
-                desc: 'チームはブラウザで参照。AIエージェントはAPIトークンで接続してデザインシステムを直接参照しながら実装できる。',
+                title: 'Share with your team and AI',
+                desc: 'Teams browse in the browser. AI agents connect via API token and reference your design system directly while implementing.',
               },
             ].map((s, i) => (
               <div
@@ -256,12 +257,12 @@ export default function LandingPage({ onEnterApp }: Props) {
       <section className="lp-cta-section">
         <div className="lp-section-inner" ref={ctaRef}>
           <div className="lp-cta-inner reveal-child">
-            <h2 className="lp-cta-heading">まずはウェイティングリストへ</h2>
+            <h2 className="lp-cta-heading">Join the waitlist</h2>
             <p className="lp-cta-desc">
-              公開時にメールでお知らせします。フィードバックをいただける方も歓迎です。
+              We'll reach out when we launch. Early feedback is very welcome.
             </p>
             <button className="lp-btn-primary" onClick={openModal}>
-              ウェイティングリストに登録する →
+              Join the waitlist →
             </button>
           </div>
         </div>
@@ -285,11 +286,11 @@ export default function LandingPage({ onEnterApp }: Props) {
             {!submitted ? (
               <>
                 <div className="lp-modal-header">
-                  <h2 className="lp-modal-title">ウェイティングリストに登録</h2>
-                  <button className="lp-modal-close" onClick={closeModal} aria-label="閉じる">✕</button>
+                  <h2 className="lp-modal-title">Join the waitlist</h2>
+                  <button className="lp-modal-close" onClick={closeModal} aria-label="Close">✕</button>
                 </div>
                 <p className="lp-modal-desc">
-                  公開時にメールでお知らせします。登録後すぐに使えるわけではありません。
+                  We'll notify you when we launch. You won't have immediate access after signing up.
                 </p>
                 <form className="lp-modal-form" onSubmit={handleSubmit}>
                   <input
@@ -301,15 +302,15 @@ export default function LandingPage({ onEnterApp }: Props) {
                     autoFocus
                   />
                   {error && <p className="lp-modal-error">{error}</p>}
-                  <button className="lp-btn-primary lp-modal-submit" type="submit">登録する</button>
+                  <button className="lp-btn-primary lp-modal-submit" type="submit">Sign up</button>
                 </form>
               </>
             ) : (
               <div className="lp-modal-success">
                 <div className="lp-modal-success-icon">✓</div>
-                <h2 className="lp-modal-title">登録完了</h2>
-                <p className="lp-modal-desc">ウェイティングリストに登録しました。公開時にご連絡します。</p>
-                <button className="lp-btn-primary" onClick={closeModal}>閉じる</button>
+                <h2 className="lp-modal-title">You're on the list</h2>
+                <p className="lp-modal-desc">We'll reach out when we launch.</p>
+                <button className="lp-btn-primary" onClick={closeModal}>Close</button>
               </div>
             )}
           </div>
