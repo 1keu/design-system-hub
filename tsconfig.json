@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "lib": ["ES6", "DOM"],
+    "module": "commonjs",
+    "jsx": "react",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "./dist",
+    "sourceMap": false,
+    "skipLibCheck": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/@figma"
+    ]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
