@@ -16,7 +16,6 @@ function saveEmail(email: string) {
   } catch { /* ignore */ }
 }
 
-/* Intersection Observer for scroll-reveal */
 function useReveal() {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -32,11 +31,27 @@ function useReveal() {
   return ref;
 }
 
-const TICKER_ITEMS = [
-  'Figma Import', 'AI-Readable Structure', 'Team SSoT',
-  'Token Management', 'Variant Gallery', 'Real-time Sync',
-  'Color Tokens', 'Typography Scale', 'Do & Don\'t Docs',
-  'Component Properties', 'Size Variants', 'Export to Figma',
+const FEATURES = [
+  {
+    num: '01',
+    title: 'Figmaから直接インポート',
+    desc: 'Figma Pluginを使ってコンポーネントセット・変数をそのままインポート。バリアント、サイズ、スタイル情報を引き継いで即座に管理できる。ゼロから定義し直す必要はない。',
+  },
+  {
+    num: '02',
+    title: 'AIが読めるデザインシステム',
+    desc: 'APIトークンで接続すれば、AIエージェントがデザインシステムを直接参照して実装できる。FigmaのコンポーネントはAIに「画像」として見えるだけだが、HubはトークンとVariantが構造化されたデータとして扱える。',
+  },
+  {
+    num: '03',
+    title: 'チーム全員のSSoT',
+    desc: 'デザイナー・PdM・エンジニアがブラウザで同じデザインシステムを参照・確認できる。コンポーネントの定義・使い方・Do&Don\'tを一か所で管理。Storybookを別途立てる必要がなくなる。',
+  },
+  {
+    num: '04',
+    title: 'バリアントをギャラリーで確認',
+    desc: '全コンポーネントを全バリアント・全サイズでギャラリー表示。実装前にコンポーネントの見え方・使い分けをチームで視覚的に確認・共有できる。',
+  },
 ];
 
 export default function LandingPage({ onEnterApp }: Props) {
@@ -45,9 +60,9 @@ export default function LandingPage({ onEnterApp }: Props) {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError]         = useState('');
 
-  const featuresRef  = useReveal();
-  const howRef       = useReveal();
-  const ctaRef       = useReveal();
+  const featuresRef = useReveal();
+  const howRef      = useReveal();
+  const ctaRef      = useReveal();
 
   function openModal()  { setShowModal(true); setSubmitted(false); setEmail(''); setError(''); }
   function closeModal() { setShowModal(false); }
@@ -81,47 +96,37 @@ export default function LandingPage({ onEnterApp }: Props) {
 
       {/* ===== Hero ===== */}
       <section className="lp-hero">
-        {/* Background grid */}
-        <div className="lp-hero-grid" aria-hidden />
-        <div className="lp-hero-glow lp-hero-glow--1" aria-hidden />
-        <div className="lp-hero-glow lp-hero-glow--2" aria-hidden />
-
         <div className="lp-hero-inner">
-          <div className="lp-hero-text">
-            <div className="lp-badge lp-anim lp-anim--1">
-              <span className="lp-badge-dot" />
-              Private Beta
-            </div>
 
-            <h1 className="lp-h1 lp-anim lp-anim--2">
+          {/* Left: Text */}
+          <div className="lp-hero-text">
+            <p className="lp-overline">Private Beta</p>
+
+            <h1 className="lp-h1">
               デザインシステムを、<br />
-              <em className="lp-h1-accent">チーム全員とAI</em><br />
-              の言語にする。
+              チームとAIの<br />
+              <em className="lp-h1-em">共通言語にする。</em>
             </h1>
 
-            <p className="lp-subhead lp-anim lp-anim--3">
-              FigmaのコンポーネントをインポートしUI設計をトークン・バリアント・ドキュメントとして構造化。
-              デザイナーも、エンジニアも、AIエージェントも、同じデザインシステムを参照できる。
+            <p className="lp-subhead">
+              FigmaのコンポーネントをインポートしUI設計をトークン・バリアント・ドキュメントとして構造化。デザイナーも、エンジニアも、AIエージェントも、同じデザインシステムを参照できる。
             </p>
 
-            <div className="lp-hero-actions lp-anim lp-anim--4">
-              <button className="lp-btn-primary lp-btn-large" onClick={openModal}>
+            <div className="lp-hero-actions">
+              <button className="lp-btn-primary" onClick={openModal}>
                 始める →
               </button>
               <p className="lp-hero-note">公開時にメールでお知らせします</p>
             </div>
           </div>
 
-          {/* Component gallery mockup */}
-          <div className="lp-hero-visual lp-anim lp-anim--3">
+          {/* Right: Product mockup */}
+          <div className="lp-hero-visual">
             <div className="lp-gallery-mock">
-              {/* Browser chrome */}
               <div className="lp-gm-bar">
                 <span className="lp-gm-dot" /><span className="lp-gm-dot" /><span className="lp-gm-dot" />
                 <span className="lp-gm-url">design-system-hub.app</span>
               </div>
-
-              {/* App header strip */}
               <div className="lp-gm-appbar">
                 <span className="lp-gm-logo">◈ Design System Hub</span>
                 <div className="lp-gm-tabs">
@@ -130,11 +135,7 @@ export default function LandingPage({ onEnterApp }: Props) {
                   ))}
                 </div>
               </div>
-
-              {/* Gallery body */}
               <div className="lp-gm-body">
-
-                {/* Button section */}
                 <div className="lp-gm-section">
                   <div className="lp-gm-section-header">
                     <span className="lp-gm-dot-color" style={{ background: '#2563EB' }} />
@@ -142,43 +143,18 @@ export default function LandingPage({ onEnterApp }: Props) {
                     <span className="lp-gm-section-tag">Form</span>
                   </div>
                   <div className="lp-gm-variants">
-                    {/* Variant chips label row */}
-                    <div className="lp-gm-variant-group">
-                      <span className="lp-gm-vlabel">primary</span>
-                      <div className="lp-gm-comp-row">
-                        {['xs','sm','md','lg'].map((s,i) => (
-                          <button key={s} className="lp-c-btn lp-c-btn--primary" style={{ padding: `${4+i*3}px ${10+i*4}px`, fontSize: `${10+i}px` }}>{s}</button>
-                        ))}
+                    {(['primary','outline','ghost','danger'] as const).map((v, vi) => (
+                      <div key={v} className="lp-gm-variant-group">
+                        <span className="lp-gm-vlabel">{v}</span>
+                        <div className="lp-gm-comp-row">
+                          {['xs','sm','md','lg'].map((s, si) => (
+                            <button key={s} className={`lp-c-btn lp-c-btn--${v}`} style={{ padding: `${4+si*3}px ${10+si*4}px`, fontSize: `${10+si}px` }}>{s}</button>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                    <div className="lp-gm-variant-group">
-                      <span className="lp-gm-vlabel">outline</span>
-                      <div className="lp-gm-comp-row">
-                        {['xs','sm','md','lg'].map((s,i) => (
-                          <button key={s} className="lp-c-btn lp-c-btn--outline" style={{ padding: `${4+i*3}px ${10+i*4}px`, fontSize: `${10+i}px` }}>{s}</button>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="lp-gm-variant-group">
-                      <span className="lp-gm-vlabel">ghost</span>
-                      <div className="lp-gm-comp-row">
-                        {['xs','sm','md','lg'].map((s,i) => (
-                          <button key={s} className="lp-c-btn lp-c-btn--ghost" style={{ padding: `${4+i*3}px ${10+i*4}px`, fontSize: `${10+i}px` }}>{s}</button>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="lp-gm-variant-group">
-                      <span className="lp-gm-vlabel">danger</span>
-                      <div className="lp-gm-comp-row">
-                        {['xs','sm','md','lg'].map((s,i) => (
-                          <button key={s} className="lp-c-btn lp-c-btn--danger" style={{ padding: `${4+i*3}px ${10+i*4}px`, fontSize: `${10+i}px` }}>{s}</button>
-                        ))}
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
-
-                {/* Badge section */}
                 <div className="lp-gm-section">
                   <div className="lp-gm-section-header">
                     <span className="lp-gm-dot-color" style={{ background: '#22C55E' }} />
@@ -186,15 +162,11 @@ export default function LandingPage({ onEnterApp }: Props) {
                     <span className="lp-gm-section-tag">Display</span>
                   </div>
                   <div className="lp-gm-badge-row">
-                    <span className="lp-c-badge lp-c-badge--blue">New</span>
-                    <span className="lp-c-badge lp-c-badge--green">Stable</span>
-                    <span className="lp-c-badge lp-c-badge--amber">Beta</span>
-                    <span className="lp-c-badge lp-c-badge--red">Deprecated</span>
-                    <span className="lp-c-badge lp-c-badge--grey">Draft</span>
+                    {(['blue','green','amber','red','grey'] as const).map(c => (
+                      <span key={c} className={`lp-c-badge lp-c-badge--${c}`}>{c}</span>
+                    ))}
                   </div>
                 </div>
-
-                {/* Input section */}
                 <div className="lp-gm-section lp-gm-section--last">
                   <div className="lp-gm-section-header">
                     <span className="lp-gm-dot-color" style={{ background: '#F59E0B' }} />
@@ -202,87 +174,41 @@ export default function LandingPage({ onEnterApp }: Props) {
                     <span className="lp-gm-section-tag">Form</span>
                   </div>
                   <div className="lp-gm-input-row">
-                    <div className="lp-c-input-wrap">
-                      <span className="lp-c-input-label">default</span>
-                      <div className="lp-c-input">Search components...</div>
-                    </div>
-                    <div className="lp-c-input-wrap">
-                      <span className="lp-c-input-label">focus</span>
-                      <div className="lp-c-input lp-c-input--focus">design-system-hub</div>
-                    </div>
-                    <div className="lp-c-input-wrap">
-                      <span className="lp-c-input-label">error</span>
-                      <div className="lp-c-input lp-c-input--error">Invalid value</div>
-                    </div>
+                    {[
+                      { label: 'default', mod: '', text: 'Search components...' },
+                      { label: 'focus',   mod: 'lp-c-input--focus', text: 'design-system-hub' },
+                      { label: 'error',   mod: 'lp-c-input--error', text: 'Invalid value' },
+                    ].map(({ label, mod, text }) => (
+                      <div key={label} className="lp-c-input-wrap">
+                        <span className="lp-c-input-label">{label}</span>
+                        <div className={`lp-c-input ${mod}`}>{text}</div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
+
         </div>
       </section>
-
-      {/* ===== Ticker ===== */}
-      <div className="lp-ticker" aria-hidden>
-        <div className="lp-ticker-track">
-          {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
-            <span key={i} className="lp-ticker-item">
-              <span className="lp-ticker-dot">·</span>
-              {item}
-            </span>
-          ))}
-        </div>
-      </div>
 
       {/* ===== Features ===== */}
       <section className="lp-features">
         <div className="lp-section-inner" ref={featuresRef}>
-          <div className="lp-features-header reveal-child">
-            <p className="lp-eyebrow">Features</p>
-            <h2 className="lp-h2">なぜ Design System Hub か</h2>
-          </div>
-
-          <div className="lp-feature-grid">
-            {[
-              {
-                num: '01',
-                icon: '⇄',
-                title: 'Figmaから直接インポート',
-                desc: 'Figmaのコンポーネントセット・変数をそのままインポート。バリアント、サイズ、スタイル情報を引き継いで即座に管理できる。ゼロから定義し直す必要はない。',
-                accent: false,
-              },
-              {
-                num: '02',
-                icon: '◎',
-                title: 'AIが読めるデザインシステム',
-                desc: 'APIトークンで接続すれば、AIエージェントがデザインシステムを直接参照して実装できる。Figmaは画像ベースでAIが読めない。HubはトークンとVariantが構造化されたデータとして扱える。',
-                accent: true,
-              },
-              {
-                num: '03',
-                icon: '⊙',
-                title: 'チーム全員のSSoT',
-                desc: 'デザイナーだけでなく、PdMもエンジニアもブラウザで同じデザインシステムを参照・確認できる。コンポーネントの定義・使い方・Do&Don\'tを一か所で管理。Storybookを別途立てる必要がなくなる。',
-                accent: false,
-              },
-              {
-                num: '04',
-                icon: '▣',
-                title: 'バリアントをリアルタイムで確認',
-                desc: '全コンポーネントを全バリアント・全サイズでギャラリー表示。実装前にコンポーネントの見え方・使い分けをチームで視覚的に確認・共有できる。',
-                accent: false,
-              },
-            ].map((f, i) => (
+          <p className="lp-eyebrow reveal-child">Features</p>
+          <div className="lp-feature-list">
+            {FEATURES.map((f, i) => (
               <div
                 key={f.num}
-                className={`lp-feature-card reveal-child${f.accent ? ' lp-feature-card--accent' : ''}`}
-                style={{ '--reveal-delay': `${i * 80}ms` } as React.CSSProperties}
+                className="lp-feature-item reveal-child"
+                style={{ '--reveal-delay': `${i * 60}ms` } as React.CSSProperties}
               >
-                <div className="lp-feature-num">{f.num}</div>
-                <div className="lp-feature-icon">{f.icon}</div>
-                <h3 className="lp-feature-title">{f.title}</h3>
-                <p className="lp-feature-desc">{f.desc}</p>
+                <span className="lp-feature-num">{f.num}</span>
+                <div className="lp-feature-body">
+                  <h3 className="lp-feature-title">{f.title}</h3>
+                  <p className="lp-feature-desc">{f.desc}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -292,25 +218,22 @@ export default function LandingPage({ onEnterApp }: Props) {
       {/* ===== How it works ===== */}
       <section className="lp-how">
         <div className="lp-section-inner" ref={howRef}>
-          <div className="reveal-child">
-            <p className="lp-eyebrow">How it works</p>
-            <h2 className="lp-h2">3ステップで始められる</h2>
-          </div>
-
+          <p className="lp-eyebrow reveal-child">How it works</p>
+          <h2 className="lp-h2 reveal-child">3ステップで始められる</h2>
           <div className="lp-steps">
             {[
               {
-                num: '01',
+                num: '1',
                 title: 'FigmaからインポートまたはゼロからUI設計を定義',
-                desc: 'Figma Pluginを使ってコンポーネントをインポート、またはWebアプリ上でテンプレートを選んで空の状態から構築。アカウント不要ですぐ使える。',
+                desc: 'Figma Pluginを使ってコンポーネントをインポート、またはWebアプリ上でテンプレートを選んで空の状態から構築。',
               },
               {
-                num: '02',
+                num: '2',
                 title: 'バリアント・トークン・ドキュメントを整える',
-                desc: 'バリアント、サイズ、カラートークン、タイポグラフィ、Do&Don\'tなどをHubで一元管理。FigmaとHubが自動的に同期される。',
+                desc: 'バリアント、サイズ、カラートークン、タイポグラフィ、Do&Don\'tをHubで一元管理。FigmaとHubが同期される。',
               },
               {
-                num: '03',
+                num: '3',
                 title: 'チームとAIに共有する',
                 desc: 'チームはブラウザで参照。AIエージェントはAPIトークンで接続してデザインシステムを直接参照しながら実装できる。',
               },
@@ -318,10 +241,9 @@ export default function LandingPage({ onEnterApp }: Props) {
               <div
                 key={s.num}
                 className="lp-step reveal-child"
-                style={{ '--reveal-delay': `${i * 120}ms` } as React.CSSProperties}
+                style={{ '--reveal-delay': `${i * 80}ms` } as React.CSSProperties}
               >
-                <div className="lp-step-num">{s.num}</div>
-                <div className="lp-step-line" aria-hidden />
+                <span className="lp-step-num">{s.num}</span>
                 <h3 className="lp-step-title">{s.title}</h3>
                 <p className="lp-step-desc">{s.desc}</p>
               </div>
@@ -330,20 +252,16 @@ export default function LandingPage({ onEnterApp }: Props) {
         </div>
       </section>
 
-      {/* ===== CTA section ===== */}
+      {/* ===== CTA ===== */}
       <section className="lp-cta-section">
         <div className="lp-section-inner" ref={ctaRef}>
           <div className="lp-cta-inner reveal-child">
-            <div className="lp-cta-glow" aria-hidden />
-            <p className="lp-eyebrow">Early Access</p>
-            <h2 className="lp-cta-heading">
-              まずはウェイティングリストへ
-            </h2>
+            <h2 className="lp-cta-heading">まずはウェイティングリストへ</h2>
             <p className="lp-cta-desc">
               公開時にメールでお知らせします。フィードバックをいただける方も歓迎です。
             </p>
-            <button className="lp-btn-primary lp-btn-large" onClick={openModal}>
-              ウェイティングリストに登録する
+            <button className="lp-btn-primary" onClick={openModal}>
+              ウェイティングリストに登録する →
             </button>
           </div>
         </div>
@@ -356,11 +274,11 @@ export default function LandingPage({ onEnterApp }: Props) {
             <span className="lp-logo-mark">◈</span>
             <span className="lp-logo-name">Design System Hub</span>
           </div>
-          <p className="lp-footer-copy">© 2026 Design System Hub. All rights reserved.</p>
+          <p className="lp-footer-copy">© 2026 Design System Hub</p>
         </div>
       </footer>
 
-      {/* ===== Waitinglist Modal ===== */}
+      {/* ===== Modal ===== */}
       {showModal && (
         <div className="lp-modal-backdrop" onClick={closeModal}>
           <div className="lp-modal" onClick={e => e.stopPropagation()}>
@@ -383,9 +301,7 @@ export default function LandingPage({ onEnterApp }: Props) {
                     autoFocus
                   />
                   {error && <p className="lp-modal-error">{error}</p>}
-                  <button className="lp-btn-primary lp-modal-submit" type="submit">
-                    登録する
-                  </button>
+                  <button className="lp-btn-primary lp-modal-submit" type="submit">登録する</button>
                 </form>
               </>
             ) : (
