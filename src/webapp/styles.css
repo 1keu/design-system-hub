@@ -127,59 +127,9 @@
 }
 
 /* ----------------------------------------------------------------
-   Semantic Tokens — Dark (default)
+   Semantic Tokens — Light (default)
    ---------------------------------------------------------------- */
 :root,
-[data-theme="dark"] {
-  /* Surface */
-  --color-base:      var(--primitive-black-0);   /* #0C0C11 アプリ背景 */
-  --color-surface-1: var(--primitive-black-1);   /* #13131A Card / Panel */
-  --color-surface-2: var(--primitive-black-2);   /* #1C1C26 Hover / 区別が必要な面 */
-  --color-border:    var(--primitive-black-3);   /* #26263A 精密な1pxの線 */
-
-  /* Text */
-  --color-text-1:    var(--primitive-white-0);   /* #EDEAF4 Primary */
-  --color-text-2:    var(--primitive-white-2);   /* #8888A0 Secondary */
-  --color-text-3:    var(--primitive-white-3);   /* #5C5A70 Disabled */
-
-  /* Accent */
-  --color-accent:       var(--primitive-blue-600);  /* #2563EB */
-  --color-accent-hover: var(--primitive-blue-700);  /* #1D4ED8 */
-  --color-accent-dim:   var(--primitive-blue-900);  /* #1E2A4A 背景での使用 */
-  --color-accent-text:  var(--primitive-blue-200);  /* #BFDBFE Accentの上のテキスト */
-
-  /* Semantic */
-  --color-success:     var(--primitive-green-500);
-  --color-success-bg:  var(--primitive-green-950);
-  --color-success-text: var(--primitive-green-400);
-
-  --color-warning:     var(--primitive-amber-500);
-  --color-warning-bg:  var(--primitive-amber-950);
-  --color-warning-text: var(--primitive-amber-400);
-
-  --color-danger:      var(--primitive-red-500);
-  --color-danger-bg:   var(--primitive-red-950);
-  --color-danger-text: var(--primitive-red-400);
-
-  --color-info:        var(--primitive-sky-500);
-  --color-info-text:   var(--primitive-sky-400);
-
-  /* Focus ring */
-  --color-focus: var(--primitive-blue-500);
-
-  /* Overlay */
-  --color-overlay: rgba(0, 0, 0, 0.6);
-
-  /* Shadow overrides for dark */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.6);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.7);
-  --shadow-xl: 0 24px 80px rgba(0, 0, 0, 0.8);
-}
-
-/* ----------------------------------------------------------------
-   Semantic Tokens — Light
-   ---------------------------------------------------------------- */
 [data-theme="light"] {
   /* Surface */
   --color-base:      #F5F4F0;
@@ -192,7 +142,7 @@
   --color-text-2:    #5C5A70;
   --color-text-3:    #9896A8;
 
-  /* Accent (同じ青) */
+  /* Accent */
   --color-accent:       var(--primitive-blue-600);
   --color-accent-hover: var(--primitive-blue-700);
   --color-accent-dim:   var(--primitive-blue-50);
@@ -217,11 +167,58 @@
   --color-focus: var(--primitive-blue-600);
   --color-overlay: rgba(0, 0, 0, 0.4);
 
-  /* Shadow overrides for light */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
-  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.15);
+  /* Shadow */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.10);
+  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.12);
+}
+
+/* ----------------------------------------------------------------
+   Semantic Tokens — Dark
+   ---------------------------------------------------------------- */
+[data-theme="dark"] {
+  /* Surface */
+  --color-base:      var(--primitive-black-0);
+  --color-surface-1: var(--primitive-black-1);
+  --color-surface-2: var(--primitive-black-2);
+  --color-border:    var(--primitive-black-3);
+
+  /* Text */
+  --color-text-1:    var(--primitive-white-0);
+  --color-text-2:    var(--primitive-white-2);
+  --color-text-3:    var(--primitive-white-3);
+
+  /* Accent */
+  --color-accent:       var(--primitive-blue-600);
+  --color-accent-hover: var(--primitive-blue-700);
+  --color-accent-dim:   var(--primitive-blue-900);
+  --color-accent-text:  var(--primitive-blue-200);
+
+  /* Semantic */
+  --color-success:      var(--primitive-green-500);
+  --color-success-bg:   var(--primitive-green-950);
+  --color-success-text: var(--primitive-green-400);
+
+  --color-warning:      var(--primitive-amber-500);
+  --color-warning-bg:   var(--primitive-amber-950);
+  --color-warning-text: var(--primitive-amber-400);
+
+  --color-danger:       var(--primitive-red-500);
+  --color-danger-bg:    var(--primitive-red-950);
+  --color-danger-text:  var(--primitive-red-400);
+
+  --color-info:         var(--primitive-sky-500);
+  --color-info-text:    var(--primitive-sky-400);
+
+  --color-focus: var(--primitive-blue-500);
+  --color-overlay: rgba(0, 0, 0, 0.6);
+
+  /* Shadow */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.7);
+  --shadow-xl: 0 24px 80px rgba(0, 0, 0, 0.8);
 }
 
 /* ----------------------------------------------------------------
@@ -1479,10 +1476,10 @@ body {
   left: 0;
   right: 0;
   z-index: var(--z-sticky);
-  background: rgba(12, 12, 17, 0.72);
+  background: rgba(245, 244, 240, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: var(--border-width) solid rgba(38, 38, 58, 0.6);
+  border-bottom: var(--border-width) solid var(--color-border);
 }
 
 .lp-header-inner {
@@ -1604,7 +1601,7 @@ body {
 .lp-hero-grid {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, rgba(38, 38, 58, 0.8) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.07) 1px, transparent 1px);
   background-size: 32px 32px;
   pointer-events: none;
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
@@ -1621,7 +1618,7 @@ body {
 .lp-hero-glow--1 {
   width: 600px;
   height: 600px;
-  background: rgba(37, 99, 235, 0.12);
+  background: rgba(37, 99, 235, 0.07);
   top: -100px;
   right: -100px;
 }
@@ -1629,7 +1626,7 @@ body {
 .lp-hero-glow--2 {
   width: 400px;
   height: 400px;
-  background: rgba(37, 99, 235, 0.06);
+  background: rgba(37, 99, 235, 0.04);
   bottom: 0;
   left: 10%;
 }
@@ -1689,7 +1686,7 @@ body {
 
 .lp-h1-accent {
   font-style: normal;
-  background: linear-gradient(135deg, var(--primitive-blue-200) 0%, var(--primitive-blue-500) 60%, #818cf8 100%);
+  background: linear-gradient(135deg, var(--primitive-blue-700) 0%, var(--primitive-blue-500) 60%, #6366f1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1875,8 +1872,8 @@ body {
   gap: var(--space-3);
   animation: lp-float-3 5s var(--ease-standard) infinite;
   animation-delay: 0.5s;
-  border-color: rgba(37, 99, 235, 0.4);
-  background: rgba(30, 42, 74, 0.8);
+  border-color: rgba(37, 99, 235, 0.3);
+  background: var(--primitive-blue-50);
 }
 
 .lp-card-ai-icon {
@@ -1924,7 +1921,7 @@ body {
   border-bottom: var(--border-width) solid var(--color-border);
   overflow: hidden;
   padding: var(--space-3) 0;
-  background: var(--color-surface-1);
+  background: var(--color-surface-2);
 }
 
 .lp-ticker-track {
@@ -1999,8 +1996,8 @@ body {
 .lp-feature-card:hover::before { opacity: 1; }
 
 .lp-feature-card--accent {
-  border-color: rgba(37, 99, 235, 0.4);
-  background: rgba(30, 42, 74, 0.4);
+  border-color: rgba(37, 99, 235, 0.35);
+  background: var(--primitive-blue-50);
 }
 
 .lp-feature-num {
