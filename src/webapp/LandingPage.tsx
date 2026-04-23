@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import './landing.css';
 
 interface Props {
   onEnterApp: () => void;
@@ -111,55 +112,112 @@ export default function LandingPage({ onEnterApp }: Props) {
             </div>
           </div>
 
-          {/* Floating UI cards */}
+          {/* Component gallery mockup */}
           <div className="lp-hero-visual lp-anim lp-anim--3">
-            {/* Main card: Gallery */}
-            <div className="lp-card lp-card--main">
-              <div className="lp-card-titlebar">
-                <span className="lp-card-dot" /><span className="lp-card-dot" /><span className="lp-card-dot" />
-                <span className="lp-card-label">Button — Variants</span>
+            <div className="lp-gallery-mock">
+              {/* Browser chrome */}
+              <div className="lp-gm-bar">
+                <span className="lp-gm-dot" /><span className="lp-gm-dot" /><span className="lp-gm-dot" />
+                <span className="lp-gm-url">design-system-hub.app</span>
               </div>
-              <div className="lp-card-body">
-                <div className="lp-card-row">
-                  {['primary', 'outline', 'ghost', 'danger'].map(v => (
-                    <div key={v} className={`lp-card-chip lp-card-chip--${v}`}>{v}</div>
+
+              {/* App header strip */}
+              <div className="lp-gm-appbar">
+                <span className="lp-gm-logo">◈ Design System Hub</span>
+                <div className="lp-gm-tabs">
+                  {['Gallery', 'Colors', 'Typography'].map((t, i) => (
+                    <span key={t} className={`lp-gm-tab${i === 0 ? ' active' : ''}`}>{t}</span>
                   ))}
                 </div>
-                <div className="lp-card-sizes">
-                  {['xs', 'sm', 'md', 'lg'].map((s, i) => (
-                    <div key={s} className="lp-card-size-row">
-                      <span className="lp-card-size-label">{s}</span>
-                      <div className="lp-card-size-bar" style={{ width: `${40 + i * 24}px`, height: `${16 + i * 4}px` }} />
+              </div>
+
+              {/* Gallery body */}
+              <div className="lp-gm-body">
+
+                {/* Button section */}
+                <div className="lp-gm-section">
+                  <div className="lp-gm-section-header">
+                    <span className="lp-gm-dot-color" style={{ background: '#2563EB' }} />
+                    <span className="lp-gm-section-name">Button</span>
+                    <span className="lp-gm-section-tag">Form</span>
+                  </div>
+                  <div className="lp-gm-variants">
+                    {/* Variant chips label row */}
+                    <div className="lp-gm-variant-group">
+                      <span className="lp-gm-vlabel">primary</span>
+                      <div className="lp-gm-comp-row">
+                        {['xs','sm','md','lg'].map((s,i) => (
+                          <button key={s} className="lp-c-btn lp-c-btn--primary" style={{ padding: `${4+i*3}px ${10+i*4}px`, fontSize: `${10+i}px` }}>{s}</button>
+                        ))}
+                      </div>
                     </div>
-                  ))}
+                    <div className="lp-gm-variant-group">
+                      <span className="lp-gm-vlabel">outline</span>
+                      <div className="lp-gm-comp-row">
+                        {['xs','sm','md','lg'].map((s,i) => (
+                          <button key={s} className="lp-c-btn lp-c-btn--outline" style={{ padding: `${4+i*3}px ${10+i*4}px`, fontSize: `${10+i}px` }}>{s}</button>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="lp-gm-variant-group">
+                      <span className="lp-gm-vlabel">ghost</span>
+                      <div className="lp-gm-comp-row">
+                        {['xs','sm','md','lg'].map((s,i) => (
+                          <button key={s} className="lp-c-btn lp-c-btn--ghost" style={{ padding: `${4+i*3}px ${10+i*4}px`, fontSize: `${10+i}px` }}>{s}</button>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="lp-gm-variant-group">
+                      <span className="lp-gm-vlabel">danger</span>
+                      <div className="lp-gm-comp-row">
+                        {['xs','sm','md','lg'].map((s,i) => (
+                          <button key={s} className="lp-c-btn lp-c-btn--danger" style={{ padding: `${4+i*3}px ${10+i*4}px`, fontSize: `${10+i}px` }}>{s}</button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Floating card: Tokens */}
-            <div className="lp-card lp-card--tokens">
-              <div className="lp-card-token-title">Color Tokens</div>
-              {[
-                { name: 'color.accent', hex: '#2563EB', swatch: '#2563EB' },
-                { name: 'color.text.1', hex: '#EDEAF4', swatch: '#EDEAF4' },
-                { name: 'color.surface.1', hex: '#13131A', swatch: '#13131A' },
-              ].map(t => (
-                <div key={t.name} className="lp-card-token-row">
-                  <span className="lp-card-token-swatch" style={{ background: t.swatch }} />
-                  <span className="lp-card-token-name">{t.name}</span>
-                  <span className="lp-card-token-hex">{t.hex}</span>
+                {/* Badge section */}
+                <div className="lp-gm-section">
+                  <div className="lp-gm-section-header">
+                    <span className="lp-gm-dot-color" style={{ background: '#22C55E' }} />
+                    <span className="lp-gm-section-name">Badge</span>
+                    <span className="lp-gm-section-tag">Display</span>
+                  </div>
+                  <div className="lp-gm-badge-row">
+                    <span className="lp-c-badge lp-c-badge--blue">New</span>
+                    <span className="lp-c-badge lp-c-badge--green">Stable</span>
+                    <span className="lp-c-badge lp-c-badge--amber">Beta</span>
+                    <span className="lp-c-badge lp-c-badge--red">Deprecated</span>
+                    <span className="lp-c-badge lp-c-badge--grey">Draft</span>
+                  </div>
                 </div>
-              ))}
-            </div>
 
-            {/* Floating card: AI status */}
-            <div className="lp-card lp-card--ai">
-              <div className="lp-card-ai-icon">◎</div>
-              <div className="lp-card-ai-text">
-                <div className="lp-card-ai-title">AI Connected</div>
-                <div className="lp-card-ai-sub">API token active</div>
+                {/* Input section */}
+                <div className="lp-gm-section lp-gm-section--last">
+                  <div className="lp-gm-section-header">
+                    <span className="lp-gm-dot-color" style={{ background: '#F59E0B' }} />
+                    <span className="lp-gm-section-name">Input</span>
+                    <span className="lp-gm-section-tag">Form</span>
+                  </div>
+                  <div className="lp-gm-input-row">
+                    <div className="lp-c-input-wrap">
+                      <span className="lp-c-input-label">default</span>
+                      <div className="lp-c-input">Search components...</div>
+                    </div>
+                    <div className="lp-c-input-wrap">
+                      <span className="lp-c-input-label">focus</span>
+                      <div className="lp-c-input lp-c-input--focus">design-system-hub</div>
+                    </div>
+                    <div className="lp-c-input-wrap">
+                      <span className="lp-c-input-label">error</span>
+                      <div className="lp-c-input lp-c-input--error">Invalid value</div>
+                    </div>
+                  </div>
+                </div>
+
               </div>
-              <div className="lp-card-ai-pulse" />
             </div>
           </div>
         </div>
