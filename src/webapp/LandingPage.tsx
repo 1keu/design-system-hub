@@ -35,9 +35,9 @@ const DEMO_BUTTON = {
   name: 'Button', cat: 'Actions',
   tokens: [
     { group: 'Color — primary', items: [
-      { key: 'color.bg.primary',       value: '#0C0C11' },
+      { key: 'color.bg.primary',       value: '#2563EB' },
       { key: 'color.text.primary',     value: '#FFFFFF'  },
-      { key: 'color.bg.primary.hover', value: '#2A2A38' },
+      { key: 'color.bg.primary.hover', value: '#1D4ED8' },
     ]},
     { group: 'Color — outline', items: [
       { key: 'color.bg.outline',     value: 'transparent' },
@@ -100,8 +100,8 @@ const SIDEBAR_COMPONENTS = [
 ];
 
 const GALLERY_BUTTON_VARIANTS = [
-  { label: 'primary', bg: '#0C0C11',    color: '#fff',     border: 'transparent' },
-  { label: 'outline', bg: 'transparent', color: '#0C0C11', border: '#0C0C11'     },
+  { label: 'primary', bg: '#2563EB',    color: '#fff',     border: 'transparent' },
+  { label: 'outline', bg: 'transparent', color: '#2563EB', border: '#2563EB'     },
   { label: 'ghost',   bg: 'transparent', color: '#9896A8', border: 'transparent' },
   { label: 'danger',  bg: '#FEE2E2',    color: '#991B1B',  border: '#FECACA'     },
 ];
@@ -114,44 +114,94 @@ const COMPARISON = [
   { feature: 'Designer + dev + AI',    figma: false, storybook: 'partial' },
 ];
 
-const CAPABILITIES = [
+const WORKFLOW_STEPS = [
   {
-    dir: 'Figma → Hub',
-    label: 'Import',
-    desc: 'Import components from Figma. Variants, tokens, and structure are carried over automatically.',
+    num: '01',
+    title: 'Build your system in Hub',
+    desc: 'Add components to Hub — from scratch in the browser, imported from Figma, or pushed from your codebase. All definitions live in Hub as the single source of truth.',
+    points: [
+      'Start blank or choose a template',
+      'Import Component Sets from Figma via Plugin',
+      'Push components from code via REST API',
+    ],
+    visual: 'sources' as const,
   },
   {
-    dir: 'Code → Hub',
-    label: 'Sync',
-    desc: 'Sync your system from your codebase via REST API. Keep Hub up to date as your code evolves.',
+    num: '02',
+    title: 'Design in Figma, stay in sync',
+    desc: 'The Hub Plugin connects your Figma canvas to Hub. Push any component to Figma for design work. When a definition changes in Hub, the plugin updates Figma. When you refine something in Figma, the plugin syncs it back — always bidirectional.',
+    points: [
+      'Hub → Plugin → Figma: generate Component Sets on canvas',
+      'Figma → Plugin → Hub: push Figma changes back to Hub',
+      'Designers always work from the latest Hub definition',
+    ],
+    visual: 'sync' as const,
+    video: 'hub-figma-sync.mp4',
+    videoLabel: 'Bidirectional Figma sync',
   },
   {
-    dir: 'Hub → Figma',
-    label: 'Push',
-    desc: 'Push updated definitions back to Figma. Designers always work from the latest source.',
-  },
-  {
-    dir: 'Hub → Code / AI',
-    label: 'Consume',
-    desc: 'Connect an API token to Cursor, Copilot, or Claude. AI implements directly from your system.',
+    num: '03',
+    title: 'Code with AI from Hub',
+    desc: 'Set an API token in your AI tool. The AI reads component definitions, tokens, and guidelines from Hub and generates code in your language. Components are tracked by ID — name or config changes in Hub sync automatically. Source code is stored back in Hub via API.',
+    points: [
+      'API token → AI reads components directly from Hub',
+      'Components tracked by ID — rename or reconfigure without breaking sync',
+      'Generated source code stored back in Hub per component',
+    ],
+    visual: 'code' as const,
+    video: 'hub-ai-code.mp4',
+    videoLabel: 'AI building from Hub API',
   },
 ];
 
 const CREATION = [
   {
+    id: 'scratch' as const,
     icon: '◻',
     label: 'From scratch',
-    desc: 'Build your system in the browser. Choose a template or start blank — no account required.',
+    desc: 'Build your design system directly in the browser. Choose from a template or start blank — no Figma file or codebase needed.',
+    steps: [
+      'Click "+ Add component" and choose a template or start blank',
+      'Define variants (primary, outline, ghost…) and sizes (xs–lg)',
+      'Set color tokens, radius, spacing, and typography per variant',
+      'Write usage guidelines and Do & Don\'t — readable by AI',
+    ],
+    video: 'hub-create-component.mp4',
+    videoLabel: 'Creating a component in Hub',
+    link: null as string | null,
+    linkLabel: null as string | null,
   },
   {
+    id: 'figma' as const,
     icon: '⬡',
     label: 'From Figma',
-    desc: 'Install the Figma Plugin and import existing components. Variants and tokens come over automatically.',
+    desc: 'Import your existing Figma components into Hub. The plugin reads Component Sets and carries over variants, sizes, and tokens automatically.',
+    steps: [
+      'Select a Component Set in Figma',
+      'Open the Hub Plugin and click Import',
+      'Variants, sizes, and tokens are carried over automatically',
+      'Add usage guidelines and Do & Don\'t in Hub',
+    ],
+    video: 'figma-to-hub.mp4',
+    videoLabel: 'Importing from Figma Plugin',
+    link: 'https://www.figma.com/community/plugin/000000/design-system-hub',
+    linkLabel: 'Install Figma Plugin →',
   },
   {
+    id: 'code' as const,
     icon: '{ }',
     label: 'From code',
-    desc: 'Push components from your codebase via REST API. Bring your existing system into Hub.',
+    desc: 'Push components from your existing codebase via REST API. Keep Hub in sync as your code evolves.',
+    steps: [
+      'Generate an API token in Hub settings',
+      'POST component definitions to the Hub API',
+      'Tokens, variants, and guidelines are stored in Hub',
+      'Connect AI tools to your token and build from Hub',
+    ],
+    video: 'code-to-hub.mp4',
+    videoLabel: 'Pushing components via API',
+    link: '/docs/api',
+    linkLabel: 'API Documentation →',
   },
 ];
 
@@ -192,7 +242,8 @@ export default function LandingPage({ onEnterApp }: Props) {
   const [prevSize,    setPrevSize]    = useState<'xs' | 'sm' | 'md' | 'lg'>('md');
   const [prevDisabled, setPrevDisabled] = useState(false);
   const [prevLoading,  setPrevLoading]  = useState(false);
-  const [openFaq,     setOpenFaq]     = useState<number | null>(null);
+  const [openFaq,      setOpenFaq]      = useState<number | null>(null);
+  const [creationTab,  setCreationTab]  = useState<'scratch' | 'figma' | 'code'>('scratch');
 
   const demoRef         = useReveal();
   const comparisonRef   = useReveal();
@@ -389,8 +440,8 @@ export default function LandingPage({ onEnterApp }: Props) {
                         disabled={prevDisabled}
                         style={{
                           ...({
-                            primary: { background: '#0C0C11', color: '#fff',      border: '1px solid transparent' },
-                            outline: { background: 'transparent', color: '#0C0C11', border: '1px solid #0C0C11' },
+                            primary: { background: '#2563EB', color: '#fff',      border: '1px solid transparent' },
+                            outline: { background: 'transparent', color: '#2563EB', border: '1px solid #2563EB' },
                             ghost:   { background: 'transparent', color: '#9896A8', border: '1px solid transparent' },
                             danger:  { background: '#FEE2E2',     color: '#991B1B', border: '1px solid #FECACA' },
                           } as const)[prevVariant],
@@ -568,21 +619,115 @@ export default function LandingPage({ onEnterApp }: Props) {
         </div>
       </section>
 
-      {/* ===== Capabilities ===== */}
+      {/* ===== Capabilities / Workflow ===== */}
       <section className="lp-capabilities" id="capabilities">
         <div className="lp-section-inner" ref={capabilitiesRef}>
-          <p className="lp-eyebrow reveal-child">// CAPABILITIES</p>
+          <p className="lp-eyebrow reveal-child">// HOW IT WORKS</p>
           <h2 className="lp-h2 reveal-child">Connect everything.</h2>
-          <div className="lp-cap-grid">
-            {CAPABILITIES.map((c, i) => (
-              <div
-                key={c.dir}
-                className="lp-cap-card reveal-child"
-                style={{ '--reveal-delay': `${i * 60}ms` } as React.CSSProperties}
-              >
-                <p className="lp-cap-dir">{c.dir}</p>
-                <p className="lp-cap-label">{c.label}</p>
-                <p className="lp-cap-desc">{c.desc}</p>
+
+          <div className="lp-workflow">
+            {WORKFLOW_STEPS.map((step, i) => (
+              <div key={step.num} className="lp-wf-step reveal-child" style={{ '--reveal-delay': `${i * 80}ms` } as React.CSSProperties}>
+
+                {/* Left: number + connecting line */}
+                <div className="lp-wf-marker">
+                  <span className="lp-wf-num">{step.num}</span>
+                  {i < WORKFLOW_STEPS.length - 1 && <span className="lp-wf-line" />}
+                </div>
+
+                {/* Right: text + visual */}
+                <div className="lp-wf-inner">
+                  <div className="lp-wf-text">
+                    <h3 className="lp-wf-title">{step.title}</h3>
+                    <p className="lp-wf-desc">{step.desc}</p>
+                    <ul className="lp-wf-points">
+                      {step.points.map(p => (
+                        <li key={p}>{p}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="lp-wf-visual">
+                    {step.visual === 'sources' && (
+                      <div className="lp-wf-sources">
+                        <div className="lp-wf-sources-cards">
+                          {[
+                            { icon: '◻', label: 'From scratch', sub: 'Browser' },
+                            { icon: '⬡', label: 'From Figma',   sub: 'Plugin'  },
+                            { icon: '{}', label: 'From code',   sub: 'API'     },
+                          ].map(s => (
+                            <div key={s.label} className="lp-wf-source-card">
+                              <span className="lp-wf-source-icon">{s.icon}</span>
+                              <span className="lp-wf-source-label">{s.label}</span>
+                              <span className="lp-wf-source-sub">{s.sub}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="lp-wf-sources-arrow">↓</div>
+                        <div className="lp-wf-hub-badge">◈ Hub</div>
+                      </div>
+                    )}
+
+                    {step.visual === 'sync' && (
+                      <div className="lp-wf-sync-wrap">
+                        <div className="lp-wf-sync-diagram">
+                          <div className="lp-wf-sync-node lp-wf-sync-node--hub">
+                            <span className="lp-wf-sync-icon">◈</span>
+                            <span className="lp-wf-sync-label">Hub</span>
+                          </div>
+                          <div className="lp-wf-sync-arrows">
+                            <span className="lp-wf-sync-arrow">→</span>
+                            <span className="lp-wf-sync-tag">Plugin</span>
+                            <span className="lp-wf-sync-arrow">←</span>
+                          </div>
+                          <div className="lp-wf-sync-node">
+                            <span className="lp-wf-sync-icon">⬡</span>
+                            <span className="lp-wf-sync-label">Figma</span>
+                          </div>
+                        </div>
+                        <div className="lp-wf-video-wrap">
+                          <video className="lp-wf-video" autoPlay loop muted playsInline />
+                          <div className="lp-wf-video-overlay">
+                            <span className="lp-wf-play">▶</span>
+                            <span className="lp-wf-video-label">{step.videoLabel}</span>
+                            <span className="lp-wf-video-note">// {step.video}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {step.visual === 'code' && (
+                      <div className="lp-wf-code-wrap">
+                        <div className="lp-wf-code-block">
+                          <div className="lp-wf-code-bar">
+                            <span className="lp-wf-code-filename">.cursor/mcp.json</span>
+                            <span className="lp-wf-code-badge">API token</span>
+                          </div>
+                          <pre className="lp-wf-pre">{`{
+  "design-system-hub": {
+    "token": "dsh_live_xxxxxxxxxxxx",
+    "endpoint": "https://api.design-system-hub.app"
+  }
+}
+
+// AI reads components by ID from Hub:
+// button-primary — variants: primary, outline, ghost
+// color.bg.primary: #0C0C11  radius: 4px
+// guideline: "Use for primary actions only."`}</pre>
+                        </div>
+                        <div className="lp-wf-video-wrap">
+                          <video className="lp-wf-video" autoPlay loop muted playsInline />
+                          <div className="lp-wf-video-overlay">
+                            <span className="lp-wf-play">▶</span>
+                            <span className="lp-wf-video-label">{step.videoLabel}</span>
+                            <span className="lp-wf-video-note">// {step.video}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
               </div>
             ))}
           </div>
@@ -594,20 +739,53 @@ export default function LandingPage({ onEnterApp }: Props) {
         <div className="lp-section-inner" ref={creationRef}>
           <p className="lp-eyebrow reveal-child">// GETTING STARTED</p>
           <h2 className="lp-h2 reveal-child">Start anywhere.</h2>
-          <div className="lp-creation-grid">
-            {CREATION.map((c, i) => (
-              <div
-                key={c.label}
-                className="lp-creation-card reveal-child"
-                style={{ '--reveal-delay': `${i * 60}ms` } as React.CSSProperties}
+
+          <div className="lp-creation-tabs reveal-child">
+            {CREATION.map(c => (
+              <button
+                key={c.id}
+                className={`lp-creation-tab${creationTab === c.id ? ' active' : ''}`}
+                onClick={() => setCreationTab(c.id)}
               >
-                <span className="lp-creation-icon">{c.icon}</span>
-                <p className="lp-creation-label">{c.label}</p>
-                <p className="lp-creation-desc">{c.desc}</p>
-              </div>
+                <span className="lp-creation-tab-icon">{c.icon}</span>
+                {c.label}
+              </button>
             ))}
           </div>
-          <p className="lp-creation-note reveal-child">New or existing — both work.</p>
+
+          {CREATION.filter(c => c.id === creationTab).map(c => (
+            <div key={c.id} className="lp-creation-body">
+              <div className="lp-creation-content">
+                <p className="lp-creation-desc">{c.desc}</p>
+                <div className="lp-creation-steps">
+                  {c.steps.map((s, i) => (
+                    <div key={i} className="lp-creation-step">
+                      <span className="lp-creation-step-n">{i + 1}</span>
+                      <span className="lp-creation-step-text">{s}</span>
+                    </div>
+                  ))}
+                </div>
+                {c.link && (
+                  <a
+                    className="lp-creation-link"
+                    href={c.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {c.linkLabel}
+                  </a>
+                )}
+              </div>
+              <div className="lp-creation-video-wrap">
+                <video className="lp-creation-video" autoPlay loop muted playsInline />
+                <div className="lp-creation-video-overlay">
+                  <span className="lp-creation-play">▶</span>
+                  <span className="lp-creation-video-label">{c.videoLabel}</span>
+                  <span className="lp-creation-video-note">// {c.video}</span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
